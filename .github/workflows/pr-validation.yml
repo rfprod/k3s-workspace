@@ -1,0 +1,40 @@
+name: pr-validation
+
+on:
+  pull_request:
+    branches: [main]
+
+defaults:
+  run:
+    shell: bash
+
+concurrency:
+  group: ${{ github.head_ref }}.${{ github.sha }}.pr-validation
+  cancel-in-progress: true
+
+jobs:
+  premerge:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Validate the commit messages
+        run: |
+          python3 -m venv .venv
+          . .venv/bin/activate
+          python -m pip install --upgrade pip
+          python -m pip install commitizen
+          git checkout -b premerge
+          git fetch origin main:main
+          cz check --rev-range main..premerge
+
+      - name: Lint shell
+        run: |
+          sudo apt update
+          sudo apt install -y shellcheck
+          shellcheck ./tools/shell/*.sh -x
