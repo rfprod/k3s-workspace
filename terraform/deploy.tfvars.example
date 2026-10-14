@@ -1,0 +1,26 @@
+apps = {
+  client = {
+    namespace   = "yout-namespace"
+    image       = "your/client-image-name"
+    tag         = "latest"
+    replicas    = 1
+    app_type    = "frontend"
+    environment = {}
+    ports = {
+      http = 8080
+    }
+  }
+
+  api = {
+    namespace   = "yout-namespace"
+    image       = "your/api-image-name"
+    tag         = "latest"
+    replicas    = 1
+    app_type    = "backend"
+    environment = {}
+    ports = {
+      http      = 8080
+      websocket = 8082
+    }
+  }
+}
