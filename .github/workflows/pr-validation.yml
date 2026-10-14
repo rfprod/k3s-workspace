@@ -38,3 +38,18 @@ jobs:
           sudo apt update
           sudo apt install -y shellcheck
           shellcheck ./tools/shell/*.sh -x
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v4
+
+      - name: Terraform Format Check
+        run: |
+          terraform fmt -check -recursive ./terraform
+
+      - name: Terraform Validate
+        run: |
+          cd ./terraform
+          terraform init
+          terraform validate
+          cd ..
+          bash ./tools/shell/tf-state-reset.sh

@@ -23,8 +23,7 @@
   "shellcheck.exclude": [],
   "shellcheck.ignorePatterns": {
     "**/.git/objects/**": true,
-    "**/.git/subtree-cache/**": true,
-    "**/node_modules/*/**": true
+    "**/.git/subtree-cache/**": true
   },
   "shellcheck.run": "onType",
   "shellcheck.useWorkspaceRootAsCwd": true,
