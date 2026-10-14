@@ -1,0 +1,12 @@
+{
+  "recommendations": [
+    "Atishay-Jain.All-Autocomplete",
+    "jasonnutter.vscode-codeowners",
+    "editorconfig.editorconfig",
+    "github.vscode-github-actions",
+    "foxundermoon.shell-format",
+    "timonwong.shellcheck",
+    "redhat.vscode-yaml",
+    "HashiCorp.terraform",
+  ]
+}

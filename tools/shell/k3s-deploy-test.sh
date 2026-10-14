@@ -6,25 +6,28 @@
 # Usage: ./k3s-deploy-test.sh
 ##############################################################################
 
-set -e # Exit on error
+source ./tools/shell/utils/config.sh
 
 source ./tools/shell/utils/logger.sh
 
 # Configuration
 NAMESPACE="test-ns"
 DEPLOYMENT="nginx"
-IMAGE="nginx"
-SERVICE_PORT=80
-CONTAINER_PORT=80
-SERVICE_TYPE="LoadBalancer"
-TIMEOUT=30
 
 wait_for_deployment() {
-  local ns=$1
-  local deployment=$2
-  log_info "Waiting for deployment '$deployment' to be ready..."
+  # Configuration
+  local TIMEOUT
+  TIMEOUT=30
 
-  kubectl rollout status deployment/"$deployment" -n "$ns" --timeout=${TIMEOUT}s || {
+  # Arguments
+  local NS_ARG
+  NS_ARG=$1
+  local DEPLOYMENT_ARG
+  DEPLOYMENT_ARG=$2
+
+  log_info "Waiting for deployment '$DEPLOYMENT_ARG' to be ready..."
+
+  kubectl rollout status deployment/"$DEPLOYMENT_ARG" -n "$NS_ARG" --timeout=${TIMEOUT}s || {
     log_error "Deployment failed to reach ready state"
     return 1
   }
@@ -32,6 +35,15 @@ wait_for_deployment() {
 
 # Main procedure
 main() {
+  local IMAGE
+  IMAGE="nginx"
+  local SERVICE_PORT
+  SERVICE_PORT=80
+  local CONTAINER_PORT
+  CONTAINER_PORT=80
+  local SERVICE_TYPE
+  SERVICE_TYPE="LoadBalancer"
+
   log_info "Starting k3s test procedure..."
 
   log_info "Creating namespace '$NAMESPACE'..."
@@ -66,6 +78,7 @@ main() {
   log_info "Waiting for service to get external IP (this may take a moment)..."
   sleep 3
 
+  local SERVICE_IP
   SERVICE_IP=$(kubectl -n $NAMESPACE get svc $DEPLOYMENT -o jsonpath='{.status.loadBalancer.ingress[0].ip}' 2>/dev/null || echo "")
 
   if [ -z "$SERVICE_IP" ]; then

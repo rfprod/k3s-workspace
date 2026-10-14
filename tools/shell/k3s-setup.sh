@@ -6,7 +6,7 @@
 # Usage: ./k3s-setup.sh [install|uninstall]
 ##############################################################################
 
-set -euo pipefail
+source ./tools/shell/utils/config.sh
 
 source ./tools/shell/utils/logger.sh
 
@@ -164,6 +164,23 @@ install_k3s() {
     log_warn "Could not verify cluster immediately (k3s may still be initializing)"
     log_info "You can verify manually later with: export KUBECONFIG=$KUBECONFIG && kubectl cluster-info"
   fi
+
+  log_info "local docker registry as k3s mirror."
+  cat > /etc/rancher/k3s/registries.yaml <<'EOF'
+mirrors:
+  localhost:5000:
+    endpoint:
+      - http://localhost:5000
+
+configs:
+  localhost:5000:
+    auth:
+      username: ""
+      password: ""
+    tls:
+      insecure: true
+EOF
+
 
   log_success "k3s installation completed successfully!"
   log_info "kubeconfig location: $KUBECONFIG"
