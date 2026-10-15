@@ -18,18 +18,17 @@ Whether you're setting up a single-node cluster for development or a multi-node 
 - **Automation Scripts** — Shell scripts for cluster setup, validation, and troubleshooting
 - **VS Code Integration** — Pre-configured workspace settings for consistent development
 - **CI/CD Ready** — GitHub Actions workflows for automated testing and deployment
-- **Multi-Platform Support** — Works on Linux, macOS, and Windows (with WSL)
 
 ## Technology Stack
 
-| Component       | Technology                                                                  | Purpose                                           |
-| --------------- | --------------------------------------------------------------------------- | ------------------------------------------------- |
-| **Orchestration** | [k3s](https://k3s.io)                                                      | Lightweight, production-grade Kubernetes          |
-| **IaC**         | [Terraform](https://www.terraform.io/)                                     | Infrastructure provisioning and management       |
-| **Container CLI** | [kubectl](https://kubernetes.io/docs/reference/kubectl/)                 | Kubernetes cluster interaction                    |
-| **Scripting**   | [Bash 5](https://www.gnu.org/software/bash/)                               | Automation and orchestration scripts              |
-| **Version Control** | [Git](https://git-scm.com/)                                              | Source control and workflow management           |
-| **CI/CD**       | [GitHub Actions](https://github.com/features/actions)                      | Automated testing and deployment pipelines       |
+| Component           | Technology                                               | Purpose                                    |
+| ------------------- | -------------------------------------------------------- | ------------------------------------------ |
+| **Orchestration**   | [k3s](https://k3s.io)                                    | Lightweight, production-grade Kubernetes   |
+| **IaC**             | [Terraform](https://www.terraform.io/)                   | Infrastructure provisioning and management |
+| **Container CLI**   | [kubectl](https://kubernetes.io/docs/reference/kubectl/) | Kubernetes cluster interaction             |
+| **Scripting**       | [Bash 5](https://www.gnu.org/software/bash/)             | Automation and orchestration scripts       |
+| **Version Control** | [Git](https://git-scm.com/)                              | Source control and workflow management     |
+| **CI/CD**           | [GitHub Actions](https://github.com/features/actions)    | Automated testing and deployment pipelines |
 
 ## Directory Structure
 

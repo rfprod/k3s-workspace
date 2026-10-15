@@ -7,7 +7,6 @@
 ##############################################################################
 
 source ./tools/shell/utils/config.sh
-
 source ./tools/shell/utils/logger.sh
 
 # Configuration
