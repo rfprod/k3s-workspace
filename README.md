@@ -34,20 +34,62 @@ Whether you're setting up a single-node cluster for development or a multi-node 
 
 ```
 k3s-workspace/
-├── terraform/              # Terraform configurations for infrastructure
+├── terraform/             # Terraform configurations for infrastructure
 │   ├── main.tf            # Primary infrastructure definition
 │   ├── variables.tf       # Variable declarations
 │   ├── outputs.tf         # Output values
 │   └── terraform.tfvars   # Variable assignments (create from template)
+├── terraform_mod/
+│   ├── environments
+│   │   ├── dev
+│   │   │   ├── deploy.tfvars
+│   │   │   ├── main.tf
+│   │   │   ├── outputs.tf
+│   │   │   └── variables.tf
+│   │   ├── production
+│   │   │   ├── deploy.tfvars
+│   │   │   ├── main.tf
+│   │   │   ├── outputs.tf
+│   │   │   └── variables.tf
+│   │   └── staging
+│   │       ├── deploy.tfvars
+│   │       ├── main.tf
+│   │       ├── outputs.tf
+│   │       └── variables.tf
+│   └── modules
+│       ├── application
+│       │   ├── main.tf
+│       │   ├── outputs.tf
+│       │   └── variables.tf
+│       ├── helm_release
+│       │   ├── main.tf
+│       │   ├── outputs.tf
+│       │   └── variables.tf
+│       ├── monitoring
+│       │   ├── main.tf
+│       │   ├── outputs.tf
+│       │   └── variables.tf
+│       ├── namespace
+│       │   ├── main.tf
+│       │   ├── outputs.tf
+│       │   └── variables.tf
+│       ├── networking
+│       │   ├── main.tf
+│       │   ├── outputs.tf
+│       │   └── variables.tf
+│       └── storage
+│           ├── main.tf
+│           ├── oputputs.tf
+│           └── variables.tf
 ├── tools/
-│   ├── shell/            # Automation scripts
+│   ├── shell/             # Automation scripts
 │   │   ├── k3s-setup.sh           # Initial k3s cluster setup
 │   │   └── k3s-deploy-test.sh     # Cluster validation
 │   └── docs/             # Operational documentation
-├── .github/               # GitHub Actions workflows
+├── .github/              # GitHub Actions workflows
 │   └── workflows/        # CI/CD pipeline definitions
-├── .vscode/               # VS Code workspace configuration
-├── CONTRIBUTING.md        # Contribution guidelines
+├── .vscode/              # VS Code workspace configuration
+├── CONTRIBUTING.md       # Contribution guidelines
 ├── SECURITY.md           # Security policy
 └── README.md             # This file
 ```

@@ -1,0 +1,129 @@
+# Rename this file to `deploy.tfvars` to get started.
+
+kubeconfig_path    = "~/.kube/config"
+kubeconfig_context = "default"
+environment        = "production"
+managed_by         = "terraform"
+
+create_monitoring_namespace_production = true
+enable_prometheus_production           = true
+enable_grafana_production              = true
+
+pvc_configs_production = {
+  redis = {
+    size         = "3Gi"
+    access_modes = ["ReadWriteOnce"]
+  }
+}
+
+deployments_production = {
+  client = {
+    replicas = 1
+    pod_selector_labels = {
+      app = "client"
+    }
+    containers = [
+      {
+        name  = "client"
+        image = "your/client-image:latest"
+        ports = [
+          {
+            name           = "http"
+            container_port = 8080
+          }
+        ]
+      }
+    ]
+  }
+  api = {
+    replicas = 1
+    pod_selector_labels = {
+      app = "api"
+    }
+    containers = [
+      {
+        name  = "api"
+        image = "your/api-image:latest"
+        ports = [
+          {
+            name           = "http"
+            container_port = 8080
+          },
+          {
+            name           = "websocket"
+            container_port = 8082
+          }
+        ]
+      }
+    ]
+  }
+}
+
+services_production = {
+  client = {
+    selector = {
+      app = "client"
+    }
+    ports = [
+      {
+        name        = "http"
+        port        = 8080
+        target_port = 8080
+      }
+    ]
+  }
+  api = {
+    selector = {
+      app = "api"
+    }
+    ports = [
+      {
+        name        = "http"
+        port        = 8080
+        target_port = 8080
+      },
+      {
+        name        = "websocket"
+        port        = 8082
+        target_port = 8082
+      }
+    ]
+  }
+}
+
+ingress_resources_production = {
+  default = {
+    annotations = {}
+    rules = [
+      {
+        host = "api.production.local"
+        paths = [
+          {
+            path         = "/"
+            path_type    = "Prefix"
+            service_name = "rest-service"
+            service_port = 8080
+          },
+          {
+            path         = "/ws"
+            path_type    = "Prefix"
+            service_name = "websocket-service"
+            service_port = 8082
+          }
+        ]
+      },
+      {
+        host = "production.local"
+        paths = [
+          {
+            path         = "/"
+            path_type    = "Prefix"
+            service_name = "web-service"
+            service_port = 8080
+          }
+        ]
+      }
+    ]
+    tls = null
+  }
+}

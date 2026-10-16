@@ -1,3 +1,5 @@
+# Rename this file to `deploy.tfvars` to get started.
+
 apps = {
   client = {
     namespace   = "yout-namespace"

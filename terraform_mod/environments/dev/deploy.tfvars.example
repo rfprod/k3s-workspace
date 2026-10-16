@@ -1,0 +1,129 @@
+# Rename this file to `deploy.tfvars` to get started.
+
+kubeconfig_path    = "~/.kube/config"
+kubeconfig_context = "default"
+environment        = "development"
+managed_by         = "terraform"
+
+create_monitoring_namespace_dev = false
+enable_prometheus_dev           = false
+enable_grafana_dev              = false
+
+pvc_configs_dev = {
+  redis = {
+    size         = "3Gi"
+    access_modes = ["ReadWriteOnce"]
+  }
+}
+
+deployments_dev = {
+  client = {
+    replicas = 1
+    pod_selector_labels = {
+      app = "client"
+    }
+    containers = [
+      {
+        name  = "client"
+        image = "your/client-image:latest"
+        ports = [
+          {
+            name           = "http"
+            container_port = 8080
+          }
+        ]
+      }
+    ]
+  }
+  api = {
+    replicas = 1
+    pod_selector_labels = {
+      app = "api"
+    }
+    containers = [
+      {
+        name  = "api"
+        image = "your/api-image:latest"
+        ports = [
+          {
+            name           = "http"
+            container_port = 8080
+          },
+          {
+            name           = "websocket"
+            container_port = 8082
+          }
+        ]
+      }
+    ]
+  }
+}
+
+services_dev = {
+  client = {
+    selector = {
+      app = "client"
+    }
+    ports = [
+      {
+        name        = "http"
+        port        = 8080
+        target_port = 8080
+      }
+    ]
+  }
+  api = {
+    selector = {
+      app = "api"
+    }
+    ports = [
+      {
+        name        = "http"
+        port        = 8080
+        target_port = 8080
+      },
+      {
+        name        = "websocket"
+        port        = 8082
+        target_port = 8082
+      }
+    ]
+  }
+}
+
+ingress_resources_dev = {
+  default = {
+    annotations = {}
+    rules = [
+      {
+        host = "api.dev.local"
+        paths = [
+          {
+            path         = "/"
+            path_type    = "Prefix"
+            service_name = "rest-service"
+            service_port = 8080
+          },
+          {
+            path         = "/ws"
+            path_type    = "Prefix"
+            service_name = "websocket-service"
+            service_port = 8082
+          }
+        ]
+      },
+      {
+        host = "dev.local"
+        paths = [
+          {
+            path         = "/"
+            path_type    = "Prefix"
+            service_name = "web-service"
+            service_port = 8080
+          }
+        ]
+      }
+    ]
+    tls = null
+  }
+}
