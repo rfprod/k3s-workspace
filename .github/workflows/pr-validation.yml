@@ -42,14 +42,42 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v4
 
-      - name: Terraform Format Check
+      - name: Terraform Playground - Format Check
         run: |
           terraform fmt -check -recursive ./terraform
 
-      - name: Terraform Validate
+      - name: Terraform Playground - Validate
         run: |
           cd ./terraform
           terraform init
           terraform validate
           cd ..
-          bash ./tools/shell/tf-state-reset.sh
+          bash ./tools/shell/tf-state-reset.sh 1
+
+      - name: Terraform Modules - Format Check
+        run: |
+          terraform fmt -check -recursive ./terraform_mod
+
+      - name: Terraform Module Development - Validate
+        run: |
+          cd ./terraform_mod/environments/dev
+          terraform init
+          terraform validate
+          cd ../../..
+          bash ./tools/shell/tf-state-reset.sh 2
+
+      - name: Terraform Module Staging - Validate
+        run: |
+          cd ./terraform_mod/environments/staging
+          terraform init
+          terraform validate
+          cd ../../..
+          bash ./tools/shell/tf-state-reset.sh 3
+
+      - name: Terraform Module Production - Validate
+        run: |
+          cd ./terraform_mod/environments/production
+          terraform init
+          terraform validate
+          cd ../../..
+          bash ./tools/shell/tf-state-reset.sh 4

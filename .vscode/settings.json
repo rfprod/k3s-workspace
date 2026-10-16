@@ -26,5 +26,5 @@
     "**/.git/subtree-cache/**": true
   },
   "shellcheck.run": "onType",
-  "shellcheck.useWorkspaceRootAsCwd": true,
+  "shellcheck.useWorkspaceRootAsCwd": true
 }
