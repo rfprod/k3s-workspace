@@ -19,6 +19,19 @@ Whether you're setting up a single-node cluster for development or a multi-node 
 - **VS Code Integration** — Pre-configured workspace settings for consistent development
 - **CI/CD Ready** — GitHub Actions workflows for automated testing and deployment
 
+## Related Projects
+
+This project is an Infrastructure-as-Code deployment that contains examples that **depend on** [**nx-ng-starter**](https://github.com/rfprod/nx-ng-starter) for Docker image builds and application source code.
+
+### What You Need to Know
+
+- **Images**: k3s-workspace can be configured to deploy container images built from the [**nx-ng-starter repository**](https://github.com/rfprod/nx-ng-starter#related-projects).
+- **Source Code**: [**Application logic**](https://github.com/rfprod/nx-ng-starter/tree/main/apps) and [**Dockerfiles**](<(https://github.com/rfprod/nx-ng-starter/tree/main/.docker)>) are located in the `nx-ng-starter` repo; `k3s-workspace` focuses purely on Kubernetes orchestration.
+- **Version Alignment**: Use Docker image tags in your k3s manifests to match [**nx-ng-starter build artifacts**](https://github.com/rfprod/nx-ng-starter/blob/main/tools/shell/docker/build.sh); these are always `latest` by default.
+- **Getting Started**: Review [**nx-ng-starter's build process**](https://github.com/rfprod/nx-ng-starter/tree/main/tools/shell/docker) to understand how images are created and published.
+
+If you're interested in the application source code, build system, or Angular/NestJS/NX configuration, see the [nx-ng-starter repository](https://github.com/rfprod/nx-ng-starter).
+
 ## Technology Stack
 
 | Component           | Technology                                               | Purpose                                    |
